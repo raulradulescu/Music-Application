@@ -19,23 +19,23 @@ public class Application {
     this.scanner = new Scanner(System.in);
   }
 
-  // Main method to run the application
+
   public void run() {
     System.out.println("Welcome to the Music Library");
 
     boolean isLoggedIn = promptLogin();
     if (isLoggedIn) {
       if (userManager.isAdmin(userId)) {
-        adminMenu();  // Display the admin menu if the user is an admin
+        adminMenu();  //display the admin menu if the user is an admin
       } else {
-        loggedInMenu();  // Display the menu for logged-in users
+        loggedInMenu();  //display the menu for logged-in users
       }
     } else {
-      guestMenu();
+      guestMenu();  //display the guest menu otherwise
     }
-  }
+  }  //main method to run the application
 
-  // Prompt user to log in, register, or continue as guest
+
   private boolean promptLogin() {
     System.out.println("Please select an option:");
     System.out.println("1. Log In");
@@ -59,9 +59,9 @@ public class Application {
         System.out.println("Invalid choice. Try again.");
         return promptLogin();
     }
-  }
+  }     //prompt user to log in, register, or continue as guest
 
-  // Log in method
+
   private boolean logIn() {
     System.out.print("Enter username: ");
     String username = scanner.nextLine();
@@ -75,24 +75,8 @@ public class Application {
       System.out.println("Invalid credentials. Try again.");
       return false;
     }
-  }
+  }   //log in method
 
-  // Register method
-  private void register() {
-    System.out.print("Enter a new username: ");
-    String username = scanner.nextLine();
-    System.out.print("Enter a new password: ");
-    String password = scanner.nextLine();
-
-    boolean isRegistered = userManager.register(username, password);
-    if (isRegistered) {
-      System.out.println("Registration successful! You can now log in.");
-    } else {
-      System.out.println("Registration failed. Username may already exist.");
-    }
-  }
-
-  // Guest menu (for users not logged in)
   private void guestMenu() {
     System.out.println("Guest Menu:");
     System.out.println("1. View Songs and Albums");
@@ -100,7 +84,7 @@ public class Application {
     System.out.println("3. Exit");
 
     int choice = scanner.nextInt();
-    scanner.nextLine();  // Clear newline
+    scanner.nextLine();  //clear newline
 
     switch (choice) {
       case 1:
@@ -115,24 +99,10 @@ public class Application {
         return;
       default:
         System.out.println("Invalid choice.");
-        guestMenu();  // Re-display the menu if input is invalid
+        guestMenu();  //re-display the menu if input is invalid
     }
-  }
+  } //guest menu (for users not logged in)
 
-  private void listenToSong() {
-    System.out.print("Enter Song ID to listen: ");
-    int songId = scanner.nextInt();
-    scanner.nextLine(); // Clear newline
-
-    // Fetch the song from the database
-    Song song = inputDevice.fetchSongById(songId, outputDevice);
-    if (song != null) {
-      song.play();  // Calls the play() method in Song.java
-    } else {
-      System.out.println("Song not found.");
-    }
-  }
-  // Method for browsing songs and albums
   private void browseSongsAndAlbums() {
     System.out.println("Browse Songs and Albums:");
     System.out.println("1. View All Songs");
@@ -156,23 +126,37 @@ public class Application {
         System.out.println("Invalid choice.");
     }
     browseSongsAndAlbums();  // Return to browsing menu after an action
-  }
-  // View all songs (placeholder method)
+  }     //method for browsing songs and albums
+
   private void viewAllSongs() {
     System.out.println("Fetching all songs...");
     // Logic to retrieve and display songs from the database
     inputDevice.getAllSongs().forEach(song -> outputDevice.writeMessage("Song " + song.getTitle() + " has the ID " + outputDevice.getSongId(song.getTitle())+"."));
     System.out.println(" ");
-  }
-  // View all albums (placeholder method)d
+  }   //view all songs
+
   private void viewAllAlbums() {
     System.out.println("Fetching all albums...");
     // Logic to retrieve and display albums from the database
     inputDevice.getAllAlbums().forEach(album -> outputDevice.writeMessage("Album" + album.getTitle() + " has the ID " + outputDevice.getAlbumId(album.getTitle())+"."));
     System.out.println(" ");
-  }
+  }   //view all albums
 
-  // Menu for logged-in users
+  private void register() {
+    System.out.print("Enter a new username: ");
+    String username = scanner.nextLine();
+    System.out.print("Enter a new password: ");
+    String password = scanner.nextLine();
+
+    boolean isRegistered = userManager.register(username, password);
+    if (isRegistered) {
+      System.out.println("Registration successful! You can now log in.");
+    } else {
+      System.out.println("Registration failed. Username may already exist.");
+    }
+  }   //register method
+
+
   private void loggedInMenu() {
     System.out.println("Logged-In User Menu:");
     System.out.println("1. View All Songs");
@@ -183,7 +167,7 @@ public class Application {
     System.out.println("6. Logout");
 
     int choice = scanner.nextInt();
-    scanner.nextLine();  // Clear newline
+    scanner.nextLine();  // clear newline
 
     switch (choice) {
       case 1:
@@ -196,7 +180,7 @@ public class Application {
         listenToSong();
         break;
       case 4:
-        viewPlaylists(userId,false);  // Non-admin user views only their playlists
+        viewPlaylists(userId,false);  //non-admin user views only their playlists
         break;
       case 5:
         createPlaylist();
@@ -209,9 +193,45 @@ public class Application {
       default:
         System.out.println("Invalid choice.");
     }
-    loggedInMenu(); // Redisplay the menu after an action
-  }
-  // Method to create a playlist
+    loggedInMenu(); //redisplay the menu after an action
+  }   //menu for logged-in users
+
+  private void listenToSong() {
+    System.out.print("Enter Song ID to listen: ");
+    int songId = scanner.nextInt();
+    scanner.nextLine(); //clear newline
+
+    //fetch the song from the database
+    Song song = inputDevice.fetchSongById(songId, outputDevice);
+    if (song != null) {
+      song.play();  // Calls the play() method in Song.java
+    } else {
+      System.out.println("Song not found.");
+    }
+  }   //method to listen to playable objects
+
+  private void viewPlaylists(int userId, boolean isAdmin) {
+    List<Playlist> playlists;
+    String message;
+
+    if (!isAdmin) {
+      playlists = inputDevice.getPlaylists(userId,isAdmin,outputDevice);
+      message = "You haven't created any playlists yet.";
+    } else {
+      playlists = inputDevice.getPlaylists(userId,isAdmin,outputDevice);
+      message = "No playlists found.";
+    }
+
+    if (playlists.isEmpty()) {
+      System.out.println(message);
+    } else {
+      System.out.println("Playlists:");
+      for (Playlist playlist : playlists) {
+        System.out.println("- " + playlist.getName());
+      }
+    }
+  }  //method to view playlists based on user's role
+
   private void createPlaylist() {   //change to get the user id
     System.out.print("Enter the name of your new playlist: ");
     String playlistName = scanner.nextLine();
@@ -250,9 +270,9 @@ public class Application {
     outputDevice.savePlaylist(newPlaylist);
 
     System.out.println("Playlist '" + playlistName + "' created successfully!");
-  }
+  }   //method to create a playlist
 
-  // Admin Menu
+
   private void adminMenu() {
     System.out.println("Admin Menu:");
     System.out.println("1. View All Songs");
@@ -294,8 +314,8 @@ public class Application {
         System.out.println("Invalid choice.");
     }
     adminMenu(); // Redisplay the menu after an action
-  }
-  // Method to add a new song to the database
+  }   //admin menu
+
   private void addNewSong(int albumId) {
     System.out.print("Enter the title of the new song: ");
     String title = scanner.nextLine();
@@ -308,8 +328,8 @@ public class Application {
     outputDevice.saveSong(newSong, albumId);  // Passing the album ID for standalone songs
 
     System.out.println("Song '" + title + "' added successfully!");
-  }
-  // Method to add a new album with multiple songs
+  }   //method to add a new song to the database
+
   private void addNewAlbum() {
     System.out.print("Enter the title of the new album: ");
     String albumTitle = scanner.nextLine();
@@ -357,30 +377,6 @@ public class Application {
     outputDevice.saveAlbum(newAlbum);
 
     System.out.println("Album '" + albumTitle + "' by " + artistName + " added successfully!");
-  }
-
-  // Method to view playlists based on user's role
-  private void viewPlaylists(int userId, boolean isAdmin) {
-    List<Playlist> playlists;
-    String message;
-
-    if (!isAdmin) {
-      playlists = inputDevice.getPlaylists(userId,isAdmin,outputDevice);
-      message = "You haven't created any playlists yet.";
-    } else {
-      playlists = inputDevice.getPlaylists(userId,isAdmin,outputDevice);
-      message = "No playlists found.";
-    }
-
-    if (playlists.isEmpty()) {
-      System.out.println(message);
-    } else {
-      System.out.println("Playlists:");
-      for (Playlist playlist : playlists) {
-        System.out.println("- " + playlist.getName());
-      }
-    }
-  }
-
+  }   //method to add a new album with multiple songs
 }
 

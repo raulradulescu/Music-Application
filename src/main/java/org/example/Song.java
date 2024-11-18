@@ -8,6 +8,15 @@ public class Song implements Playable, Comparable<Song> {
 
 
   public Song( String title, int duration, OutputDevice outputDevice) {
+    if (title == null || title.isEmpty()) {
+      throw new IllegalArgumentException("Title cannot be null or empty.");
+    }
+    if (duration <= 0) {
+      throw new IllegalArgumentException("Duration must be greater than zero.");
+    }
+    if (outputDevice == null) {
+      throw new NullPointerException("Output device cannot be null.");
+    }
     this.title = title;
     this.duration = duration;
     this.outputDevice = outputDevice;

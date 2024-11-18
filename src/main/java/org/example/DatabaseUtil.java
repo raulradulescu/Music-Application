@@ -10,7 +10,11 @@ public class DatabaseUtil {
   private static final String USER = "raul"; //MySQL username
   private static final String PASSWORD = "raulraulraul"; //MySQL password
 
-  public static Connection getConnection() throws SQLException {
-    return DriverManager.getConnection(URL, USER, PASSWORD);
-  }
+  public static Connection getConnection() throws DatabaseConnectionException {
+    try {
+      return DriverManager.getConnection(URL, USER, PASSWORD);
+    } catch (SQLException e) {
+      throw new DatabaseConnectionException("Failed to establish a database connection.", e);
+    }
+  }  //implements custom exception
 }

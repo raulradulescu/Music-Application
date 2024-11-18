@@ -11,6 +11,12 @@ import java.util.List;
 public class InputDevice {
   // Below we have methods that communicate with the MySQL db to fetch data from there
   public Song fetchSongById(int id, OutputDevice outputDevice) {
+    if (id <= 0) {
+      throw new IllegalArgumentException("ID must be greater than zero.");
+    }
+    if (outputDevice == null) {
+      throw new NullPointerException("Output device cannot be null.");
+    }
     try (Connection connection = DatabaseUtil.getConnection()) {
       String query = "SELECT title, duration FROM Song WHERE id = ?";
       PreparedStatement stmt = connection.prepareStatement(query);
@@ -22,24 +28,32 @@ public class InputDevice {
         int duration = rs.getInt("duration");
         return new Song(title, duration, outputDevice);
       }
-    } catch (SQLException e) {
+    } catch (DatabaseConnectionException | SQLException e) {
       e.printStackTrace();
     }
     return null;
   }
 
   public <T extends Person> T fetchPersonById(int id, String tableName, Class<T> clazz) {
+    if (id <= 0) {
+      throw new IllegalArgumentException("ID must be greater than zero.");
+    }
+    if (tableName == null || tableName.isEmpty()) {
+      throw new IllegalArgumentException("Table name cannot be null or empty.");
+    }
+    if (clazz == null) {
+      throw new NullPointerException("Class type cannot be null.");
+    }
     try (Connection connection = DatabaseUtil.getConnection()) {
       String query = "SELECT name FROM " + tableName + " WHERE id = ?";
       PreparedStatement stmt = connection.prepareStatement(query);
       stmt.setInt(1, id);
-
       ResultSet rs = stmt.executeQuery();
       if (rs.next()) {
         String name = rs.getString("name");
         return clazz.getDeclaredConstructor(String.class).newInstance(name);
       }
-    } catch (Exception e) {
+    } catch (Exception e) {     //catches any exception, including DatabaseConnectionException or SQLException
       e.printStackTrace();
     }
     return null;
