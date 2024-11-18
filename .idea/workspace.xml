@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87369cf8-f0ce-42b5-bf56-ee05656400e8" name="Changes" comment="Stable working version of the app">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DatabaseConnectionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/InvalidDataException.java" afterDir="false" />
+    <list default="true" id="87369cf8-f0ce-42b5-bf56-ee05656400e8" name="Changes" comment="More default exceptions implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Album.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Album.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/InputDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/InputDevice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Song.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/UserManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +112,7 @@
       <workItem from="1731716999887" duration="11662000" />
       <workItem from="1731853935831" duration="4300000" />
       <workItem from="1731891433033" duration="724000" />
-      <workItem from="1731950714231" duration="654000" />
+      <workItem from="1731950714231" duration="1829000" />
     </task>
     <task id="LOCAL-00001" summary="Stable working version of the app">
       <option name="closed" value="true" />
@@ -138,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731790838853</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="More default exceptions implemented">
+      <option name="closed" value="true" />
+      <created>1731952624323</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731952624324</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,7 +157,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Stable working version of the app" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stable working version of the app" />
+    <MESSAGE value="More default exceptions implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="More default exceptions implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
