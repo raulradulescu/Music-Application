@@ -34,6 +34,38 @@ public class InputDevice {
     return null;
   }
 
+  public int getSongId(String title) {
+    try (Connection connection = DatabaseUtil.getConnection()) {
+      String query = "SELECT id FROM Song WHERE title = ?";
+      PreparedStatement stmt = connection.prepareStatement(query);
+      stmt.setString(1, title);
+
+      ResultSet rs = stmt.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;  // Return -1 if song not found
+  }
+
+  public int getAlbumId(String title) {
+    try (Connection connection = DatabaseUtil.getConnection()) {
+      String query = "SELECT id FROM Album WHERE title = ?";
+      PreparedStatement stmt = connection.prepareStatement(query);
+      stmt.setString(1, title);
+
+      ResultSet rs = stmt.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;  // Return -1 if song not found
+  }
+
   public <T extends Person> T fetchPersonById(int id, String tableName, Class<T> clazz) {
     if (id <= 0) {
       throw new IllegalArgumentException("ID must be greater than zero.");

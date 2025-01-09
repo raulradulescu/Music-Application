@@ -4,6 +4,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.sql.*;
 
 public class Application {
   private final InputDevice inputDevice;
@@ -11,17 +12,23 @@ public class Application {
   private final UserManager userManager;
   private final Scanner scanner;
   private int userId = 0;
+  private final boolean debugMode;
 
-  public Application(InputDevice inputDevice, OutputDevice outputDevice) {
+  public Application(InputDevice inputDevice, OutputDevice outputDevice, boolean debugMode) {
     this.inputDevice = inputDevice;
     this.outputDevice = outputDevice;
     this.userManager = new UserManager();
     this.scanner = new Scanner(System.in);
+    this.debugMode = debugMode;
   }
 
 
   public void run() {
     System.out.println("Welcome to the Music Library");
+
+    if (debugMode) {
+      handleDebugMode();
+    }
 
     boolean isLoggedIn = promptLogin();
     if (isLoggedIn) {
@@ -34,7 +41,6 @@ public class Application {
       guestMenu();  //display the guest menu otherwise
     }
   }  //main method to run the application
-
 
   private boolean promptLogin() {
     System.out.println("Please select an option:");
@@ -131,14 +137,14 @@ public class Application {
   private void viewAllSongs() {
     System.out.println("Fetching all songs...");
     // Logic to retrieve and display songs from the database
-    inputDevice.getAllSongs().forEach(song -> outputDevice.writeMessage("Song " + song.getTitle() + " has the ID " + outputDevice.getSongId(song.getTitle())+"."));
+    inputDevice.getAllSongs().forEach(song -> outputDevice.writeMessage("Song " + song.getTitle() + " has the ID " + inputDevice.getSongId(song.getTitle())+"."));
     System.out.println(" ");
   }   //view all songs
 
   private void viewAllAlbums() {
     System.out.println("Fetching all albums...");
     // Logic to retrieve and display albums from the database
-    inputDevice.getAllAlbums().forEach(album -> outputDevice.writeMessage("Album" + album.getTitle() + " has the ID " + outputDevice.getAlbumId(album.getTitle())+"."));
+    inputDevice.getAllAlbums().forEach(album -> outputDevice.writeMessage("Album" + album.getTitle() + " has the ID " + inputDevice.getAlbumId(album.getTitle())+"."));
     System.out.println(" ");
   }   //view all albums
 
@@ -378,5 +384,83 @@ public class Application {
 
     System.out.println("Album '" + albumTitle + "' by " + artistName + " added successfully!");
   }   //method to add a new album with multiple songs
+
+
+  private void handleDebugMode() {
+    System.out.println("Running in debug mode...");
+
+    try {
+      DatabaseUtil.getConnection();
+      System.out.println("Database connection established successfully.");
+    } catch (DatabaseConnectionException e) {
+      System.err.println("Database connection error: " + e.getMessage());
+      e.printStackTrace();
+    }
+
+    System.out.println("Fetching sample data...");
+
+    List<Song> songs = inputDevice.getAllSongs();
+    if (songs.isEmpty()) {
+      System.out.println("No songs found in the database.");
+    } else {
+      System.out.println("Songs in the database:");
+      for (Song song : songs) {
+        System.out.println("ID: " + inputDevice.getSongId(song.getTitle()) + ", Title: " + song.getTitle() + ", Duration: " + song.getDuration() + " seconds");
+      }
+    }
+
+    List<Album> albums = inputDevice.getAllAlbums();
+    if (albums.isEmpty()) {
+      System.out.println("No albums found in the database.");
+    } else {
+      System.out.println("Albums in the database:");
+      for (Album album : albums) {
+        System.out.println("ID: " + inputDevice.getAlbumId(album.getTitle()) + ", Title: " + album.getTitle() + ", Artist: " + album.getArtist().getName() + ", Producer: " + album.getProducer().getName());
+        System.out.println("Songs in album:");
+        for (Song song : album.getSongs()) {
+          System.out.println("  - ID: " + inputDevice.getSongId(song.getTitle()) + ", Title: " + song.getTitle() + ", Duration: " + song.getDuration() + " seconds");
+        }
+      }
+    }
+
+    try (Connection connection = DatabaseUtil.getConnection()) {
+      String userQuery = "SELECT id, username, role FROM Users";
+      PreparedStatement userStmt = connection.prepareStatement(userQuery);
+      ResultSet userRs = userStmt.executeQuery();
+
+      if (!userRs.isBeforeFirst()) {
+        System.out.println("No users found in the database.");
+      } else {
+        System.out.println("Users in the database:");
+        while (userRs.next()) {
+          int userId = userRs.getInt("id");
+          String username = userRs.getString("username");
+          String role = userRs.getString("role");
+          System.out.println("ID: " + userId + ", Username: " + username + ", Role: " + role);
+        }
+      }
+    } catch (DatabaseConnectionException | SQLException e) {
+      System.err.println("Error fetching user data: " + e.getMessage());
+      e.printStackTrace();
+    }
+
+    List<Playlist> playlists = inputDevice.getPlaylists(0, true, outputDevice); // Fetch all playlists as admin
+    if (playlists.isEmpty()) {
+      System.out.println("No playlists found in the database.");
+    } else {
+      System.out.println("Playlists in the database:");
+      for (Playlist playlist : playlists) {
+        System.out.println("ID: " + playlist.getName() + ", Created by User ID: " + playlist.getCreatedByUserID());
+        System.out.println("Songs in playlist:");
+        for (Playable item : playlist.getItems()) {
+          if (item instanceof Song) {
+            Song song = (Song) item;
+            System.out.println("  - ID: " + inputDevice.getSongId(song.getTitle()) + ", Title: " + song.getTitle() + ", Duration: " + song.getDuration() + " seconds");
+          }
+        }
+      }
+    }
+    System.out.println("Debug mode tasks completed.");
+  }
 }
 

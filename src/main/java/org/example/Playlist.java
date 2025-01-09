@@ -8,7 +8,7 @@ public class Playlist implements Playable {
   private String name;
   private int createdByUserID;
   private List<Playable> items;
-  private OutputDevice outputDevice;
+  private final OutputDevice outputDevice;
 
   public Playlist(String name, int createdByUserID, OutputDevice outputDevice) {
     this.name = name;

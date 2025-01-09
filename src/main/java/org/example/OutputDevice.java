@@ -64,7 +64,7 @@ public class OutputDevice {
     return -1; // Return -1 in case of error
   }
 
-  public int getSongId(String title) {
+  private int getSongId(String title) {
     try (Connection connection = DatabaseUtil.getConnection()) {
       String query = "SELECT id FROM Song WHERE title = ?";
       PreparedStatement stmt = connection.prepareStatement(query);
@@ -78,7 +78,23 @@ public class OutputDevice {
       e.printStackTrace();
     }
     return -1;  // Return -1 if song not found
-  }
+  }     // getSongId but for the output device
+
+  //public int getAlbumId(String title) {
+  /*try (Connection connection = DatabaseUtil.getConnection()) {
+      String query = "SELECT id FROM Album WHERE title = ?";
+      PreparedStatement stmt = connection.prepareStatement(query);
+      stmt.setString(1, title);
+
+      ResultSet rs = stmt.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;  // Return -1 if song not found
+  }*/
 
   public void saveSong(Song song, Integer albumId) {
     try (Connection connection = DatabaseUtil.getConnection()) {
@@ -132,19 +148,4 @@ public class OutputDevice {
     }
   }
 
-  public int getAlbumId(String title) {
-    try (Connection connection = DatabaseUtil.getConnection()) {
-      String query = "SELECT id FROM Album WHERE title = ?";
-      PreparedStatement stmt = connection.prepareStatement(query);
-      stmt.setString(1, title);
-
-      ResultSet rs = stmt.executeQuery();
-      if (rs.next()) {
-        return rs.getInt("id");
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return -1;  // Return -1 if song not found
-  }
 }

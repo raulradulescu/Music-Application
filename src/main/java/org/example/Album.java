@@ -31,7 +31,6 @@ public class Album implements Playable{
   public void setTitle(String name) {
     this.title = name;
   }
-
   public String getTitle() {
     return title;
   }

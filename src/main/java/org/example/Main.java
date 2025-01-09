@@ -6,9 +6,14 @@ import java.util.Arrays;
 public class Main {
 
   public static void main(String[] args) {
+    boolean debugMode = false;
+    if (args.length > 0 && "debug".equalsIgnoreCase(args[0])) {
+      debugMode = true;
+    }
+
     InputDevice inputDevice = new InputDevice();
     OutputDevice outputDevice = new OutputDevice();
-    Application application = new Application(inputDevice, outputDevice);
+    Application application = new Application(inputDevice, outputDevice, debugMode);
     application.run();
   }
 }
