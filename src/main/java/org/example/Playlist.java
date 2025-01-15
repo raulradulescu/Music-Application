@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Playlist implements Playable {
+  //private int id; //this field for playlist ID
   private String name;
   private int createdByUserID;
   private List<Playable> items;
@@ -16,6 +17,7 @@ public class Playlist implements Playable {
     this.items = new ArrayList<>();
     this.outputDevice = outputDevice;
   }
+
   public void setName(String name) {
     this.name = name;
   }
@@ -28,6 +30,17 @@ public class Playlist implements Playable {
   }
   public int getCreatedByUserID() {
     return createdByUserID;
+  }
+/*
+  public int getId() {
+    return id;
+  }
+  public void setId(int id) {
+    this.id = id;
+  }
+*/
+  public String playlistDescription() {
+    return "Playlist ID: "+/* this.getId() +*/ " with name " + this.getName() + "was created by user " + getCreatedByUserID() + " .";
   }
 
   public void addItem(Playable item) {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--AdminMenu.xml-->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1">
+    <Label text="Admin Menu"/>
+    <Button text="View All Songs" onAction="#handleViewAllSongs"/>
+    <Button text="View All Albums" onAction="#handleViewAllAlbums"/>
+    <Button text="Listen to a Song by ID" onAction="#handleListenToSong"/>
+    <Button text="View All Playlists" onAction="#handleViewAllPlaylists"/>
+    <Button text="Delete Playlist (does not work)" onAction="#handleDeletePlaylist" />
+    <Button text="Add New Song" onAction="#handleAddNewSong"/>
+    <Button text="Add New Album" onAction="#handleAddNewAlbum"/>
+    <Button text="Logout" onAction="#handleLogout"/>
+    <Button text="Exit" onAction="#handleExit"/>
+    <!-- ListView to display songs -->
+    <ListView fx:id="songListView" visible="false" prefHeight="200" prefWidth="300" />
+    <!-- ListView for albums -->
+    <ListView fx:id="albumListView" visible="false" prefHeight="200" prefWidth="300" />
+    <!-- Label for playing song -->
+    <Label fx:id="playingSongLabel" text="" style="-fx-text-fill: green; -fx-font-size: 14px;" />
+</VBox>

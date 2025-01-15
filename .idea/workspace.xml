@@ -5,17 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="87369cf8-f0ce-42b5-bf56-ee05656400e8" name="Changes" comment="More default exceptions implemented">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/AdminMenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/GuestMenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/LoggedInMenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/AdminMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/GuestMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/LoggedInMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/MainMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/AlbumTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ArtistTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/MusicLibraryApplicationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/PlaylistTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ProducerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/SongTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Album.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Album.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Artist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Artist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MusicLibraryApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/InputDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/InputDevice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/OutputDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/OutputDevice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Playlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Producer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Producer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Song.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/UserManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +37,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="JavaFXApplication" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -47,33 +60,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Program Files/javafx-sdk-21.0.5/lib/javafx-swt.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/acer/IdeaProjects/SongLibraryProject/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MusicLibraryApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AlbumTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArtistTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MusicLibraryApplicationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MusicLibraryApplicationTest.testCreatePlaylist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MusicLibraryApplicationTest.testDatabaseConnectionFunctionality.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MusicLibraryApplicationTest.testGetPlaylists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlaylistTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlaylistTest.testPlaylistConstructor.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProducerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SongTest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/javafx-sdk-21.0.5/lib/javafx.web.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/acer/IdeaProjects/SongLibraryProject/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\acer\IdeaProjects\SongLibraryProject\src\main\resources\fxml" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.MusicLibraryApplication">
+    <configuration name="MusicLibraryApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.MusicLibraryApplication" />
       <module name="SongLibraryProject" />
-      <option name="PROGRAM_PARAMETERS" value="debug" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\javafx-sdk-21.0.5\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
@@ -85,6 +113,101 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ArtistTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SongLibraryProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.ArtistTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MusicLibraryApplicationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SongLibraryProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MusicLibraryApplicationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MusicLibraryApplicationTest.testCreatePlaylist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SongLibraryProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MusicLibraryApplicationTest" />
+      <option name="METHOD_NAME" value="testCreatePlaylist" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MusicLibraryApplicationTest.testDatabaseConnectionFunctionality" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SongLibraryProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MusicLibraryApplicationTest" />
+      <option name="METHOD_NAME" value="testDatabaseConnectionFunctionality" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MusicLibraryApplicationTest.testGetPlaylists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SongLibraryProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MusicLibraryApplicationTest" />
+      <option name="METHOD_NAME" value="testGetPlaylists" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.MusicLibraryApplication" />
+      <item itemvalue="JUnit.ArtistTest" />
+      <item itemvalue="JUnit.MusicLibraryApplicationTest" />
+      <item itemvalue="JUnit.MusicLibraryApplicationTest.testCreatePlaylist" />
+      <item itemvalue="JUnit.MusicLibraryApplicationTest.testDatabaseConnectionFunctionality" />
+      <item itemvalue="JUnit.MusicLibraryApplicationTest.testGetPlaylists" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MusicLibraryApplicationTest" />
+        <item itemvalue="JUnit.MusicLibraryApplicationTest.testDatabaseConnectionFunctionality" />
+        <item itemvalue="JUnit.MusicLibraryApplicationTest.testGetPlaylists" />
+        <item itemvalue="JUnit.MusicLibraryApplicationTest.testCreatePlaylist" />
+        <item itemvalue="JUnit.ArtistTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -129,7 +252,11 @@
       <workItem from="1735940997445" duration="1066000" />
       <workItem from="1736258375947" duration="547000" />
       <workItem from="1736337288933" duration="815000" />
-      <workItem from="1736371488585" duration="5268000" />
+      <workItem from="1736371488585" duration="66036000" />
+      <workItem from="1736697396378" duration="1106000" />
+      <workItem from="1736766358058" duration="516000" />
+      <workItem from="1736790744914" duration="11188000" />
+      <workItem from="1736941402530" duration="1500000" />
     </task>
     <task id="LOCAL-00001" summary="Stable working version of the app">
       <option name="closed" value="true" />
@@ -192,6 +319,10 @@
           <url>jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-17/lib/src.zip!/java.base/java/io/FileInputStream.java</url>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NoSuchMethodException" package="java.lang" />
+          <option name="timeStamp" value="23" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

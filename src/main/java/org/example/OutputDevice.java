@@ -25,8 +25,10 @@ public class OutputDevice {
 
   public int savePlaylist(Playlist playlist) {
     try (Connection connection = DatabaseUtil.getConnection()) {
+      connection.setAutoCommit(false); // Start transaction
+
       // Insert playlist
-      String playlistQuery = "INSERT INTO Playlist (name, created_by_user_id) VALUES (?, ?)";
+      String playlistQuery = "INSERT INTO playlist (name, created_by_user_id) VALUES (?, ?)";
       PreparedStatement playlistStmt = connection.prepareStatement(playlistQuery, PreparedStatement.RETURN_GENERATED_KEYS);
       playlistStmt.setString(1, playlist.getName());
       playlistStmt.setInt(2, playlist.getCreatedByUserID());
@@ -56,6 +58,9 @@ public class OutputDevice {
       }
       playlistSongStmt.executeBatch();
 
+      connection.commit(); // Commit transaction
+
+
       writeMessage("Playlist '" + playlist.getName() + "' saved with ID: " + playlistId);
       return playlistId;
     } catch (SQLException e) {
@@ -63,7 +68,76 @@ public class OutputDevice {
     }
     return -1; // Return -1 in case of error
   }
+/*
+  public boolean deletePlaylist(Playlist playlist) {
+    int playlistID = playlist.getId();
+    return deletePlaylistByID(playlistID);
 
+      try (Connection connection = DatabaseUtil.getConnection()) {
+        connection.setAutoCommit(false); // Start a transaction
+
+        // Delete from Playlist_Song table
+        String deletePlaylistSongsQuery = "DELETE FROM playlist_song WHERE playlist_id = ?";
+        try (PreparedStatement deletePlaylistSongsStmt = connection.prepareStatement(deletePlaylistSongsQuery)) {
+          deletePlaylistSongsStmt.setInt(1, playlist.getId());
+          deletePlaylistSongsStmt.executeUpdate();
+        }
+
+        // Delete from Playlist table
+        String deletePlaylistQuery = "DELETE FROM playlist WHERE id = ?";
+        try (PreparedStatement deletePlaylistStmt = connection.prepareStatement(deletePlaylistQuery)) {
+          deletePlaylistStmt.setInt(1, playlist.getId());
+          deletePlaylistStmt.executeUpdate();
+        }
+
+        connection.commit(); // Commit the transaction
+        writeMessage("Playlist '" + playlist.getName() + "' deleted successfully.");
+        return true;
+
+      } catch (SQLException e) {
+        e.printStackTrace();
+        writeMessage("Failed to delete playlist '" + playlist.getName() + "'.");
+        return false;
+      }
+    }
+
+  public boolean deletePlaylistByID(int playlistID) {
+    String deletePlaylistQuery = "DELETE FROM playlist WHERE id = ?";
+    String deletePlaylistSongsQuery = "DELETE FROM playlist_Song WHERE playlist_id = ?";
+
+    try (Connection connection = DatabaseUtil.getConnection()) {
+      // Begin transaction
+      connection.setAutoCommit(false);
+
+      // Delete from Playlist_Song
+      try (PreparedStatement deleteSongsStmt = connection.prepareStatement(deletePlaylistSongsQuery)) {
+        deleteSongsStmt.setInt(1, playlistID);
+        deleteSongsStmt.executeUpdate();
+      }
+
+      // Delete from Playlist
+      try (PreparedStatement deletePlaylistStmt = connection.prepareStatement(deletePlaylistQuery)) {
+        deletePlaylistStmt.setInt(1, playlistID);
+        int rowsAffected = deletePlaylistStmt.executeUpdate();
+
+        // Commit transaction if successful
+        if (rowsAffected > 0) {
+          connection.commit();
+          writeMessage("Playlist with ID " + playlistID + " deleted successfully.");
+          return true;
+        } else {
+          connection.rollback();
+          writeMessage("No playlist found with ID " + playlistID + ".");
+          return false;
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      writeMessage("Error occurred while deleting playlist with ID " + playlistID + ".");
+    }
+    return false;
+  }
+*/
   private int getSongId(String title) {
     try (Connection connection = DatabaseUtil.getConnection()) {
       String query = "SELECT id FROM Song WHERE title = ?";
@@ -80,8 +154,8 @@ public class OutputDevice {
     return -1;  // Return -1 if song not found
   }     // getSongId but for the output device
 
-  //public int getAlbumId(String title) {
-  /*try (Connection connection = DatabaseUtil.getConnection()) {
+  public int getAlbumId(String title) {
+  try (Connection connection = DatabaseUtil.getConnection()) {
       String query = "SELECT id FROM Album WHERE title = ?";
       PreparedStatement stmt = connection.prepareStatement(query);
       stmt.setString(1, title);
@@ -94,7 +168,7 @@ public class OutputDevice {
       e.printStackTrace();
     }
     return -1;  // Return -1 if song not found
-  }*/
+  }
 
   public void saveSong(Song song, Integer albumId) {
     try (Connection connection = DatabaseUtil.getConnection()) {
@@ -122,8 +196,8 @@ public class OutputDevice {
     try (Connection connection = DatabaseUtil.getConnection()) {
       // Save album information
       String albumQuery = "INSERT INTO Album (title, artist_id, producer_id) VALUES (?, " +
-              "(SELECT id FROM Artist WHERE name = ?), " +
-              "(SELECT id FROM Producer WHERE name = ?))";
+                          "(SELECT id FROM Artist WHERE name = ?), " +
+                          "(SELECT id FROM Producer WHERE name = ?))";
       PreparedStatement albumStmt = connection.prepareStatement(albumQuery, PreparedStatement.RETURN_GENERATED_KEYS);
       albumStmt.setString(1, album.getTitle());
       albumStmt.setString(2, album.getArtist().getName());

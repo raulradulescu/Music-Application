@@ -1,7 +1,6 @@
 //Main.java
 package org.example;
-
-import java.util.Arrays;
+import javafx.stage.Stage;
 
 public class Main {
 
@@ -11,10 +10,13 @@ public class Main {
       debugMode = true;
     }
 
+    Stage stage = new Stage();
     InputDevice inputDevice = new InputDevice();
     OutputDevice outputDevice = new OutputDevice();
-    Application application = new Application(inputDevice, outputDevice, debugMode);
-    application.run();
+    MusicLibraryApplication musicLibraryApplication = new MusicLibraryApplication(/*inputDevice, outputDevice, debugMode*/);
+    //application.runCLI();
+
+    musicLibraryApplication.start(stage);
   }
 }
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

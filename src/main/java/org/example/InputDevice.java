@@ -168,12 +168,25 @@ public class InputDevice {
         int artistId = rs.getInt("artist_id");
         int producerId = rs.getInt("producer_id");
 
-        Artist artist = fetchPersonById(artistId, "Artist", Artist.class);
-        Producer producer = fetchPersonById(producerId, "Producer", Producer.class);
+        // Fetch artist
+        Artist artist = null;
+        if (artistId > 0) {
+          artist = fetchPersonById(artistId, "Artist", Artist.class);
+        } else {
+          System.out.println("Invalid artist ID for album: " + title);
+        }
+        //Artist artist = fetchPersonById(artistId, "Artist", Artist.class);
+        // Fetch producer
+        Producer producer = null;
+        if (producerId > 0) {
+          producer = fetchPersonById(producerId, "Producer", Producer.class);
+        } else {
+          System.out.println("Invalid producer ID for album: " + title);
+        }
+        //Producer producer = fetchPersonById(producerId, "Producer", Producer.class);
 
         List<Song> songs = fetchSongsByAlbumId(albumId, new OutputDevice());
         Album album = new Album(title, artist, producer, songs.toArray(new Song[0]), new OutputDevice());
-
         albums.add(album);
       }
     } catch (SQLException e) {

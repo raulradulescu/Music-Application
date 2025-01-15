@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--MainMenu.fxml-->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1">
+    <Label text="Music Library"/>
+    <TextField promptText="Username" fx:id="usernameField"/>
+    <PasswordField promptText="Password" fx:id="passwordField"/>
+    <Button text="Log In" onAction="#handleLogin"/>
+    <Button text="Register" onAction="#handleRegister"/>
+    <Button text="Continue as Guest" onAction="#handleGuest"/>
+    <Button text="Exit" onAction="#handleExit"/>
+    <!-- Add a label for error messages -->
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: red;" />
+</VBox>

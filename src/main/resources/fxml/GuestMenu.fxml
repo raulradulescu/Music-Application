@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--GuestMenu.fxml-->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1">
+    <Label text="Guest Menu"/>
+    <Button text="Browse Songs and Albums" onAction="#handleBrowseSongsAndAlbums"/>
+    <Button text="Main Menu" onAction="#handleRegister"/>
+    <Button text="Exit" onAction="#handleExit"/>
+    <!-- ListView for songs -->
+    <ListView fx:id="songListView" visible="false" prefHeight="200" prefWidth="300" />
+    <!-- ListView for albums -->
+    <ListView fx:id="albumListView" visible="false" prefHeight="200" prefWidth="300" />
+</VBox>
+

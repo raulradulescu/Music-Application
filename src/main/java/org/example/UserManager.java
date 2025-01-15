@@ -1,8 +1,35 @@
+//UserManager.java
 package org.example;
 
 import java.sql.*;
 
 public class UserManager {
+
+  public boolean register(String username, String password) {
+    if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
+      throw new InvalidDataException("Username and password are required.");
+    }
+    try (Connection connection = DatabaseUtil.getConnection()) {
+      // check if the username already exists
+      String checkQuery = "SELECT COUNT(*) FROM Users WHERE username = ?";
+      PreparedStatement checkStmt = connection.prepareStatement(checkQuery);
+      checkStmt.setString(1, username);
+      ResultSet rs = checkStmt.executeQuery();
+      if (rs.next() && rs.getInt(1) > 0) {
+        return false; // username already exists
+      }
+
+      String query = "INSERT INTO Users (username, password, role) VALUES (?, ?, 'USER')";
+      PreparedStatement stmt = connection.prepareStatement(query);
+      stmt.setString(1, username);
+      stmt.setString(2, password);
+      stmt.executeUpdate();
+      return true;
+    } catch (DatabaseConnectionException | SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }   //register function throws invalid data exception
 
   public int authenticate(String username, String password) {
     if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
@@ -22,23 +49,6 @@ public class UserManager {
     }
     return -1;
   }   //auth function throws invalid data exception
-
-  public boolean register(String username, String password) {
-    if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
-      throw new InvalidDataException("Username and password are required.");
-    }
-    try (Connection connection = DatabaseUtil.getConnection()) {
-      String query = "INSERT INTO Users (username, password, role) VALUES (?, ?, 'USER')";
-      PreparedStatement stmt = connection.prepareStatement(query);
-      stmt.setString(1, username);
-      stmt.setString(2, password);
-      stmt.executeUpdate();
-      return true;
-    } catch (DatabaseConnectionException | SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }   //register function throws invalid data exception
 
   public boolean isAdmin(int userId) {
     try (Connection connection = DatabaseUtil.getConnection()) {
